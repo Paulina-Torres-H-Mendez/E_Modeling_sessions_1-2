@@ -1,54 +1,113 @@
 import random
 
+
+
+
 class Point:
     def __init__(self, x, y):
         """
-        Initialize a Point object.
-        :param x: the x position on the axis
-        :param y: the y position on the axis
+        Creates a point at (x, y).
+
+        Args:
+            x (int or float): X-coordinate.
+            y (int or float): Y-coordinate.
+
         """
-        self.x = x # define x attribute via self.x
-        self.y = y # and assign the value x to it
+        self.x = x
+        self.y = y
 
     def __str__(self):
         """
-        Magic method that is called when we try to print an instance
-        :return: <x, y>
+        Returns a string like <x, y>.
+
         """
         return f"<{self.x}, {self.y}>"
 
+
     def __repr__(self):
-        return self.__str__() # use the same way of printing as str
+        """
+        Returns the same as __str__ for easy viewing.
+
+        """
+        return self.__str__()
+
 
     def distance_orig(self):
-        return (self.x**2 + self.y**2)**0.5 # square root of the sum of x and y squared
+        """
+        Calculates distance from the origin (0, 0).
+
+        Returns the distance from origin.
+        """
+        return (self.x**2 + self.y**2)**0.5
+
 
     def __gt__(self, other):
-        my_distance = self.distance_orig()
-        other_distance = other.distance_orig()
-        return my_distance > other_distance
+        """
+        Checks if this point is farther from origin than another.
+        Args:
+            other (Point): Another point to compare.
+
+        Returns True if farther, False otherwise.
+        """
+        return self.distance_orig() > other.distance_orig()
+
 
     def __eq__(self, other):
-        my_distance = self.distance_orig()
-        other_distance = other.distance_orig()
-        return my_distance == other_distance
+        """
+        Checks if this point is the same distance from origin as another.
+        Args:
+            other (Point): Another point to compare.
+        Returns True if equal, False otherwise.
+        """
+        return self.distance_orig() == other.distance_orig()
+
 
 if __name__ == "__main__":
-    # now we need to instantiate it!
-    p = Point(1, 2) # p is an instance of 1 and 2
+    #Creates a point at (1, 2)
+    p = Point(1, 2)
+    print(f"p.x={p.x}, p.y={p.y}")
+
+    #Change x to 20
+    p.x = 20
+    print(f"p.x={p.x}, p.y={p.y}")
+    print(p)
+
+    #Generate 5 random points
+    points = [Point(random.randint(-10, 10), random.randint(-10, 10)) for _ in range(5)]
+    print("Random points:", points)
+
+    # Distance check
+    p = Point(3, 4)
+    print("Distance from origin:", p.distance_orig())
+
+    # Compare points
+    p2 = Point(1, 1)
+    print("Is p > p2?", p > p2)
+
+    # Sort and print points
+    points.sort()
+    print("Sorted points:", points)
+
+
+if __name__ == "__main__":
+    # Instance
+    p = Point(1, 2) #  p = instance of 1 n 2
     print(f"p.x={p.x} and p.y={p.y}")
     p.x = 20
     print(f"p.x={p.x} and p.y={p.y}")
     print(p)
-    # create a list of 5 random points
+    # list of 5 random points
     points = []
     for i in range(5):
-        points.append(Point(random.randint(-10, 10), # x value
-                            random.randint(-10, 10))) # y value
+        points.append(Point(random.randint(-10, 10), #x
+                            random.randint(-10, 10))) #y
+
+
+
     print("I got these 5 random points:")
     print(points)
     p = Point(3, 4)
-    print(p.distance_orig()) # expect 5 answer
+    print(p.distance_orig()) # expecting 5
     p2 = Point(1, 1)
     print(f"I am comparing p > p2: {p>p2}") # I expect to have True
     print("the sorted list of points is:")
